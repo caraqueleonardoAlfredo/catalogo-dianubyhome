@@ -1,0 +1,31 @@
+{
+  "name": "catalogo-dianubyhome",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Catálogo mayorista de espejos DianubyHome",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "npm run build && vitest run tests/catalog-ui.test.tsx && node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "@testing-library/react": "16.3.0",
+    "@testing-library/user-event": "14.6.1",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "jsdom": "26.1.0",
+    "typescript": "5.9.3",
+    "vite": "8.0.13",
+    "vitest": "4.0.18"
+  }
+}
