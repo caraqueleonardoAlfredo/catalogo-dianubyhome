@@ -14,13 +14,15 @@ test("production build is a static GitHub Pages site", () => {
   assert.doesNotMatch(builtHtml, /(?:src|href)="\/(?!catalogo-dianubyhome\/)/);
 });
 
-test("all catalog images, logo and favicon exist", () => {
-  const imagePaths = [...source.matchAll(/`\$\{B\}\/([^`]+\.(?:png|jpe?g|webp|svg))`/gi)]
-    .map((match) => path.join(root, "public", "images", "imagenes para catalogo mayorista", match[1]));
+test("all optimized catalog images, logo and favicon exist", () => {
+  const imageNames = new Set([...source.matchAll(/image\("([a-z0-9-]+)"\)/g)].map((match) => match[1]));
 
-  assert.ok(imagePaths.length > 0);
-  for (const imagePath of imagePaths) {
-    assert.ok(existsSync(imagePath), `Missing image: ${imagePath}`);
+  assert.equal(imageNames.size, 33);
+  for (const imageName of imageNames) {
+    for (const size of ["thumb", "large"]) {
+      const imagePath = path.join(root, "public", "images", "products", `${imageName}-${size}.webp`);
+      assert.ok(existsSync(imagePath), `Missing image: ${imagePath}`);
+    }
   }
   assert.ok(existsSync(path.join(root, "public", "logo-dianuby.png")));
   assert.ok(existsSync(path.join(root, "public", "favicon.png")));
@@ -49,7 +51,24 @@ test("cart and wholesale order requirements remain present", () => {
 
 test("all public asset URLs use Vite BASE_URL", () => {
   assert.match(source, /const BASE_URL = import\.meta\.env\.BASE_URL/);
-  assert.match(source, /`\$\{BASE_URL\}images\//);
+  assert.match(source, /`\$\{BASE_URL\}images\/products`/);
   assert.match(source, /`\$\{BASE_URL\}logo-dianuby\.png`/);
   assert.doesNotMatch(source, /["'`]\/(?:images|logo-dianuby|favicon)\//);
+});
+
+test("image loading keeps only the hero eager", () => {
+  assert.match(source, /loading="eager" fetchPriority="high"/);
+  assert.match(source, /src=\{product\.images\[0\]\.thumb\}[^>]+loading="lazy"[^>]+decoding="async"/);
+  assert.match(source, /nova"\)\?\.images\[1\]\.large[^>]+loading="lazy"[^>]+decoding="async"/);
+  assert.match(source, /preload\.src = product\.images\[firstImageIndex\]\.large/);
+});
+
+test("mobile modal uses one natural scroll and a compact gallery", () => {
+  const css = readFileSync(path.join(root, "app", "globals.css"), "utf8");
+  assert.match(css, /height: 38svh/);
+  assert.match(css, /min-height: 270px/);
+  assert.match(css, /max-height: 360px/);
+  assert.match(css, /overflow-y: auto/);
+  assert.match(css, /\.modal-content h2 \{ font-size: 34px/);
+  assert.doesNotMatch(css, /53vh/);
 });

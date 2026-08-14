@@ -69,6 +69,16 @@ Los productos están definidos en `app/page.tsx`, dentro de la constante `PRODUC
 
 Las fotografías se guardan dentro de `public/images/`. Las rutas de productos se construyen con `import.meta.env.BASE_URL`; no deben comenzar con `/images`. El logo y el favicon se encuentran en `public/logo-dianuby.png` y `public/favicon.png`.
 
+### Optimizar fotografías
+
+Los originales se conservan localmente en `.image-originals/`, fuera del build y del control de versiones. Para volver a generar las versiones WebP de tarjetas y galerías:
+
+```bash
+npm run images:optimize
+```
+
+El script usa Sharp como dependencia de desarrollo, mantiene la proporción original y genera archivos `thumb` de hasta 760 px y `large` de hasta 1500 px en `public/images/products/`.
+
 ## Despliegue automático
 
 El workflow `.github/workflows/deploy-pages.yml` se ejecuta en cada push a `main`:

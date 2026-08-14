@@ -32,3 +32,7 @@ Thumbs.db
 # Miscellaneous generated folders
 outputs/
 work/
+
+# Local source-photo backup and generated audit reports
+.image-originals/
+reports/image-optimization.json
