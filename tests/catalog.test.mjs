@@ -17,7 +17,7 @@ test("production build is a static GitHub Pages site", () => {
 test("all optimized catalog images, logo and favicon exist", () => {
   const imageNames = new Set([...source.matchAll(/image\("([a-z0-9-]+)"\)/g)].map((match) => match[1]));
 
-  assert.equal(imageNames.size, 33);
+  assert.equal(imageNames.size, 34);
   for (const imageName of imageNames) {
     for (const size of ["thumb", "large"]) {
       const imagePath = path.join(root, "public", "images", "products", `${imageName}-${size}.webp`);
@@ -63,12 +63,12 @@ test("image loading keeps only the hero eager", () => {
   assert.match(source, /preload\.src = product\.images\[firstImageIndex\]\.large/);
 });
 
-test("mobile modal uses one natural scroll and a compact gallery", () => {
+test("mobile modal uses one natural scroll and a full-width square gallery", () => {
   const css = readFileSync(path.join(root, "app", "globals.css"), "utf8");
-  assert.match(css, /height: 38svh/);
-  assert.match(css, /min-height: 270px/);
-  assert.match(css, /max-height: 360px/);
+  assert.match(css, /aspect-ratio: 1/);
+  assert.match(css, /\.modal-gallery > img \{ padding: 0; \}/);
+  assert.match(css, /max-height: none/);
   assert.match(css, /overflow-y: auto/);
   assert.match(css, /\.modal-content h2 \{ font-size: 34px/);
-  assert.doesNotMatch(css, /53vh/);
+  assert.doesNotMatch(css, /height: 38svh/);
 });

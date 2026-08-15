@@ -253,8 +253,8 @@ footer p, footer > a:last-child { color: rgba(255,255,255,.56); font-size: 11px;
   .floating-whatsapp { right: 14px; bottom: 14px; }
   .modal { padding: 0; place-items: stretch; overflow: hidden; }
   .modal-panel { width: 100%; height: 100vh; height: 100dvh; min-height: 0; max-height: 100vh; max-height: 100dvh; display: block; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; }
-  .modal-gallery { width: 100%; height: 38vh; height: 38svh; min-height: 270px; max-height: 360px; }
-  .modal-gallery > img { padding: 10px 12px 56px; }
+  .modal-gallery { width: 100%; height: auto; min-height: 0; max-height: none; aspect-ratio: 1; }
+  .modal-gallery > img { padding: 0; }
   .gallery-controls { left: 12px; right: 12px; bottom: 10px; }
   .gallery-controls button { width: 38px; height: 38px; }
   .modal-content { min-width: 0; padding: 24px 18px 28px; }
@@ -282,7 +282,7 @@ footer p, footer > a:last-child { color: rgba(255,255,255,.56); font-size: 11px;
 }
 
 @media (max-width: 380px) {
-  .modal-gallery { height: 36svh; min-height: 260px; max-height: 320px; }
+  .modal-gallery { height: auto; min-height: 0; max-height: none; }
   .modal-content { padding-inline: 16px; }
   .modal-content h2 { font-size: 32px; }
   .add-row { grid-template-columns: 1fr; }

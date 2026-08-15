@@ -35,4 +35,6 @@ work/
 
 # Local source-photo backup and generated audit reports
 .image-originals/
+.incoming-images/
+*.rar
 reports/image-optimization.json
