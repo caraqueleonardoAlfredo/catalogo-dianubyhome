@@ -59,7 +59,7 @@ test("all public asset URLs use Vite BASE_URL", () => {
 test("image loading keeps only the hero eager", () => {
   assert.match(source, /loading="eager" fetchPriority="high"/);
   assert.match(source, /src=\{product\.images\[0\]\.thumb\}[^>]+loading="lazy"[^>]+decoding="async"/);
-  assert.match(source, /nova"\)\?\.images\[1\]\.large[^>]+loading="lazy"[^>]+decoding="async"/);
+  assert.match(source, /nova"\)\?\.images\[2\]\.large[^>]+loading="lazy"[^>]+decoding="async"/);
   assert.match(source, /preload\.src = product\.images\[firstImageIndex\]\.large/);
 });
 
